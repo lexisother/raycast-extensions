@@ -2,7 +2,8 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "uwu-radio",
   "title": "uwu radio",
-  "description": "",
+  "description": "Extension for showing what's currently playing on the uwu.network radio",
+  "version": "1.0.0",
   "icon": "command-icon.png",
   "author": "lexisother",
   "categories": [
