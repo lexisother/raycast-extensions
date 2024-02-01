@@ -11,6 +11,12 @@
   "license": "MIT",
   "commands": [
     {
+      "name": "detailView",
+      "title": "Detailed View",
+      "description": "See detailed information about the currently playing track.",
+      "mode": "view"
+    },
+    {
       "name": "nowPlayingMenuBar",
       "title": "Menu Bar Player",
       "description": "See what's currently playing in your Menu Bar.",
@@ -24,7 +30,8 @@
     "@raycast/utils": "^1.4.8",
     "@vue-reactivity/watch": "^0.2.0",
     "@vue/reactivity": "^3.4.15",
-    "cross-fetch": "^4.0.0"
+    "cross-fetch": "^4.0.0",
+    "outdent": "^0.8.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",

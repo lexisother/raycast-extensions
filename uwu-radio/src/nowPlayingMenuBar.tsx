@@ -1,31 +1,30 @@
 import { useEffect, useState } from "react";
 import { watchEffect } from "@vue-reactivity/watch";
 import { Icon, Image, MenuBarExtra, LaunchType, launchCommand } from "@raycast/api";
-import { getClient } from "./syncClient";
+import { getClient, Song } from "./syncClient";
 import { useCachedState } from "@raycast/utils";
 
 export default function Command() {
   const client = getClient();
   const [isLoading, setIsLoading] = useState(true);
-  const [state, setState] = useCachedState<{ title?: string; artist?: string; album?: string; cover?: string | null }>(
-    "track",
-    {
-      title: "",
-      artist: "",
-    },
-  );
+  const [state, setState] = useCachedState<Song>("track", {
+    name: "",
+    artist: "",
+    submitter: "",
+  });
 
   // This might be the worst thing I've ever seen or written.
   // Vue reactivity in a React component.
   useEffect(() => {
     const unwatch = watchEffect(() => {
-      if (client.current.value?.name !== "loading...") {
-        console.log(client.current.value);
+      const track = client.current.value;
+      if (track?.name !== "loading...") {
         setState({
-          title: client.current.value?.name,
-          artist: client.current.value?.artist,
-          album: client.current.value?.album ?? "",
-          cover: client.current.value?.artUrl,
+          name: track?.name ?? "",
+          artist: track?.artist ?? "",
+          album: track?.album ?? "",
+          artUrl: track?.artUrl,
+          submitter: track?.submitter ?? "",
         });
       }
     });
@@ -41,15 +40,15 @@ export default function Command() {
     return () => unwatch();
   });
 
-  const title = `${state.title} - ${state.artist}`;
+  const title = `${state.name} - ${state.artist}`;
 
   return (
     <MenuBarExtra
       isLoading={isLoading}
       icon={
-        state.cover
+        state.artUrl
           ? {
-              source: state.cover,
+              source: state.artUrl,
               mask: Image.Mask.RoundedRectangle,
             }
           : Icon.PlayFilled
@@ -57,6 +56,16 @@ export default function Command() {
       title={title}
       tooltip={title}
     >
+      <MenuBarExtra.Item
+        title="Open detailed view"
+        icon={Icon.ArrowClockwise}
+        onAction={() =>
+          launchCommand({
+            name: "detailView",
+            type: LaunchType.UserInitiated,
+          })
+        }
+      />
     </MenuBarExtra>
   );
 }
