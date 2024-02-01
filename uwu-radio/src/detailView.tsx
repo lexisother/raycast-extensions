@@ -65,7 +65,7 @@ export default function Command() {
     <Detail
       isLoading={isLoading}
       markdown={markdown}
-      navigationTitle="Pikachu"
+      navigationTitle="radio.uwu.network"
       metadata={
         <Detail.Metadata>
           <Detail.Metadata.Label title="Title" text={state.name} />
