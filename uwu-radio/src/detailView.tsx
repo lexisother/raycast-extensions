@@ -70,7 +70,7 @@ export default function Command() {
         <Detail.Metadata>
           <Detail.Metadata.Label title="Title" text={state.name} />
           <Detail.Metadata.Label title="Artist" text={state.artist} />
-          <Detail.Metadata.Label title="Album" text={state.album!} />
+          {state.album && <Detail.Metadata.Label title="Album" text={state.album} />}
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label
             title="Submitter"
